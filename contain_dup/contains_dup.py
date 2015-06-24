@@ -7,14 +7,16 @@ def containsDuplicate(nums):
 
 
 def containsNearbyDuplicate(nums, k):
+    tmpnums = []
+    for i, v in enumerate(nums):
+        tmpnums.append((v, i))
+    tmpnums.sort()
     i = 0
-    while i < len(nums):
-        tmpnums = nums[i:k]
-        tmpnums.sort()
-        for j in range(len(tmpnums)-1):
-            if tmpnums[i] == tmpnums[i+1]:
+    while i < len(tmpnums)-1:
+        if tmpnums[i][0] == tmpnums[i+1][0]:
+            if tmpnums[i+1][1] - tmpnums[i][1] <= k:
                 return True
-        i += k
+        i += 1
     return False
 
 
@@ -34,9 +36,11 @@ print containsNearbyDuplicate([], 1)
 print containsNearbyDuplicate([1], 1)    
 print containsNearbyDuplicate([1, 2, 3], 2)    
 print containsNearbyDuplicate([2, 3, 1], 2)    
-print containsNearbyDuplicate([2, 3, 2], 3)    
+print containsNearbyDuplicate([2, 3, 2], 1)    
 print containsNearbyDuplicate([-1, 3, 2, -1], 2)    
-print containsNearbyDuplicate([-1, 3, 2, -1], 4)
+print containsNearbyDuplicate([-1, 3, 2, -1], 3)
+print containsNearbyDuplicate([-1, -1], 1)
+print containsNearbyDuplicate([99, 99], 2)
 
 nums = [x for x in xrange(30000)]
 print containsNearbyDuplicate(nums, len(nums))
